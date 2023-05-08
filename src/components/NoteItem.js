@@ -1,6 +1,6 @@
 import { ListItem, Typography } from "@mui/material";
 
-function NoteItem() {
+function NoteItem({ title }) {
   return (
     <ListItem
       sx={{
@@ -11,7 +11,7 @@ function NoteItem() {
       }}
     >
       <Typography variant='h5' component='p'>
-        Heading
+        {title}
       </Typography>
       <Typography variant='body1'>Content</Typography>
     </ListItem>
