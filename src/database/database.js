@@ -1,5 +1,4 @@
 const initDB = (setState) => {
-
   const indexedDB = window.indexedDB;
   const request = indexedDB.open("notesDatabase", 1);
 
@@ -9,14 +8,14 @@ const initDB = (setState) => {
   };
 
   request.onsuccess = () => {
-      console.log("created");
-      const db = request.result;
-      const transaction = db.transaction("notes", "readwrite");
-      const store = transaction.objectStore("notes");
-      const notes = store.getAll();
-      notes.onsuccess = () => {
-        setState(notes.result);
-      };
+    console.log("created");
+    const db = request.result;
+    const transaction = db.transaction("notes", "readwrite");
+    const store = transaction.objectStore("notes");
+    const notes = store.getAll();
+    notes.onsuccess = () => {
+      setState(notes.result);
+    };
   };
 
   request.onupgradeneeded = function () {
@@ -26,7 +25,7 @@ const initDB = (setState) => {
   };
 };
 
-const addNote = (currentNote) => {
+const addNoteToDB = (currentNote) => {
   const indexedDB = window.indexedDB;
   const request = indexedDB.open("notesDatabase", 1);
 
@@ -38,28 +37,35 @@ const addNote = (currentNote) => {
   request.onsuccess = function () {
     const db = request.result;
     const transaction = db.transaction("notes", "readwrite");
-
     const store = transaction.objectStore("notes");
-    const titleIndex = store.index("title");
-    const contentIndex = store.index("content");
 
+    console.log(currentNote);
     store.put(currentNote);
-    const titleQuery = titleIndex.get(["First"]);
-    //   const contentQuery = contentIndex.get(["Note"]);
-
-    //   contentQuery.onsuccess = function () {
-    //     console.log("contentQuery", contentQuery.result);
-    //   };
-
     transaction.oncomplete = function () {
       db.close();
     };
   };
 };
 
-addNote({ id: 1, title: "First", content: "Note" });
-addNote({ id: 2, title: "Second", content: "Note" });
-addNote({ id: 3, title: "Third", content: "Note" });
+const deleteNoteFromDB = (deletedNoteId) => {
+  const indexedDB = window.indexedDB;
+  const request = indexedDB.open("notesDatabase", 1);
 
+  request.onerror = function (event) {
+    console.error("An error occurred with IndexedDB");
+    console.error(event);
+  };
 
-export { initDB };
+  request.onsuccess = function () {
+    const db = request.result;
+    const transaction = db.transaction("notes", "readwrite");
+    const store = transaction.objectStore("notes");
+    store.delete(deletedNoteId);
+  };
+};
+
+addNoteToDB({ id: 1, title: "First", content: "First\nNote" });
+// addNote({ id: 2, title: "Second", content: "Second\nNote" });
+// addNote({ id: 3, title: "Third", content: "Third\nNote" });
+
+export { initDB, addNoteToDB, deleteNoteFromDB };

@@ -1,6 +1,6 @@
 import { ListItem, Typography } from "@mui/material";
 
-function NoteItem({ title }) {
+function NoteItem({ title, onChoice, id, content }) {
   return (
     <ListItem
       sx={{
@@ -9,11 +9,13 @@ function NoteItem({ title }) {
         justifyContent: "flex-start",
         alignItems: "flex-start",
       }}
+      divider={true}
+      onClick={() => onChoice(id)}
     >
       <Typography variant='h5' component='p'>
         {title}
       </Typography>
-      <Typography variant='body1'>Content</Typography>
+      <Typography variant='body1'>{content}</Typography>
     </ListItem>
   );
 }
