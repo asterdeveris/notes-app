@@ -4,11 +4,11 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-function Header({ setReadOnly, addNote, deleteNote }) {
+function Header({ setReadOnly, addNote, deleteNote, searchInput, onSearch }) {
   return (
     <AppBar position='fixed'>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-        <SearchBar />
+        <SearchBar value={searchInput} onSearch={onSearch} />
         <ButtonGroup>
           <IconButton color='inherit' onClick={addNote}>
             <AddIcon />

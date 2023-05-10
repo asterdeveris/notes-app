@@ -12,6 +12,7 @@ function App() {
   const [notes, setNotes] = useState([]);
   const [currentNote, setCurrentNote] = useState({});
   const [isReadOnly, setReadOnly] = useState(true);
+  const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
     initDB(setNotes);
@@ -69,6 +70,10 @@ function App() {
     }
   };
 
+  const searchNote = (input) => {
+    setSearchInput((prev) => (prev = input));
+  };
+
   return (
     <NotesContext.Provider value={notes}>
       <Box sx={{ width: 1, height: 1 }}>
@@ -76,10 +81,12 @@ function App() {
           setReadOnly={setReadOnly}
           addNote={addNote}
           deleteNote={deleteNote}
+          onSearch={searchNote}
+          searchInput={searchInput}
         />
         <Grid container spacing={2} sx={{ mt: 8 }}>
           <Grid item xs={4}>
-            <SideBar onChoice={setChosenNote} />
+            <SideBar onChoice={setChosenNote} searchInput={searchInput} />
           </Grid>
           <Grid item xs={8}>
             <Workspace

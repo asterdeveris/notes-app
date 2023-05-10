@@ -1,15 +1,14 @@
 import { TextField } from "@mui/material";
 
-function SearchBar() {
+function SearchBar({ searchInput, onSearch }) {
   return (
     <TextField
       label='search'
       variant='standard'
       type='search'
       size='small'
-
-      // value={value}
-      // onChange={onChange}
+      value={searchInput}
+      onChange={(e) => onSearch(e.target.value)}
     ></TextField>
   );
 }
