@@ -15,7 +15,9 @@ function NoteItem({ title, onChoice, id, content }) {
       <Typography variant='h5' component='p'>
         {title}
       </Typography>
-      <Typography variant='body1'>{content}</Typography>
+      <Typography variant='body1'>
+        {content.length > 100 ? `${content.slice(0, 100)}...` : content}
+      </Typography>
     </ListItem>
   );
 }

@@ -1,14 +1,17 @@
 import { TextField } from "@mui/material";
+import NotesContext from "../context/notes/notes-context";
+import { useContext } from "react";
 
-function SearchBar({ searchInput, onSearch }) {
+function SearchBar() {
+  const { searchInput, searchNote } = useContext(NotesContext);
   return (
     <TextField
       label='search'
-      variant='standard'
+      variant='outlined'
       type='search'
       size='small'
       value={searchInput}
-      onChange={(e) => onSearch(e.target.value)}
+      onChange={(e) => searchNote(e.target.value)}
     ></TextField>
   );
 }

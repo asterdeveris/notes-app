@@ -1,30 +1,3 @@
-const initDB = (setState) => {
-  const indexedDB = window.indexedDB;
-  const request = indexedDB.open("notesDatabase", 1);
-
-  request.onerror = function (event) {
-    console.error("An error occurred with IndexedDB");
-    console.error(event);
-  };
-
-  request.onsuccess = () => {
-    console.log("created");
-    const db = request.result;
-    const transaction = db.transaction("notes", "readwrite");
-    const store = transaction.objectStore("notes");
-    const notes = store.getAll();
-    notes.onsuccess = () => {
-      setState(notes.result);
-    };
-  };
-
-  request.onupgradeneeded = function () {
-    const store = request.result.createObjectStore("notes", { keyPath: "id" });
-    store.createIndex("title", ["title"], { unique: false });
-    store.createIndex("content", ["content"], { unique: false });
-  };
-};
-
 const addNoteToDB = (currentNote) => {
   const indexedDB = window.indexedDB;
   const request = indexedDB.open("notesDatabase", 1);
@@ -48,6 +21,7 @@ const addNoteToDB = (currentNote) => {
 };
 
 const deleteNoteFromDB = (deletedNoteId) => {
+  console.log("working");
   const indexedDB = window.indexedDB;
   const request = indexedDB.open("notesDatabase", 1);
 
@@ -64,8 +38,8 @@ const deleteNoteFromDB = (deletedNoteId) => {
   };
 };
 
-addNoteToDB({ id: 1, title: "First", content: "First\nNote" });
-// addNote({ id: 2, title: "Second", content: "Second\nNote" });
-// addNote({ id: 3, title: "Third", content: "Third\nNote" });
+// addNoteToDB({ id: 1, title: "First", content: "First\nNote" });
+// // addNote({ id: 2, title: "Second", content: "Second\nNote" });
+// // addNote({ id: 3, title: "Third", content: "Third\nNote" });
 
-export { initDB, addNoteToDB, deleteNoteFromDB };
+export { deleteNoteFromDB, addNoteToDB };
