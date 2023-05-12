@@ -1,4 +1,5 @@
-import { List } from "@mui/material";
+import { List, ListSubheader } from "@mui/material";
+import { Box } from "@mui/material";
 import NoteItem from "./NoteItem";
 import { useContext, useEffect } from "react";
 import NotesContext from "../context/notes/notes-context";
@@ -26,7 +27,21 @@ function SideBar() {
             ></NoteItem>
           );
         });
-  return <List sx={{ width: 1 }}>{filteredNotes}</List>;
+  return (
+    <Box sx={{ width: 1 }}>
+      <List
+        sx={{
+          position: "relative",
+          overflow: "auto",
+          maxHeight: 700,
+          pt: 0,
+        }}
+      >
+        <ListSubheader sx={{ pt: 0 }}>Notes</ListSubheader>
+        {filteredNotes}
+      </List>
+    </Box>
+  );
 }
 
 export default SideBar;

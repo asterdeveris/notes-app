@@ -1,16 +1,16 @@
+import { useContext } from "react";
 import SearchBar from "./SearchBar";
+import NotesContext from "../context/notes/notes-context";
+
 import { AppBar, ButtonGroup, IconButton, Toolbar } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-import NotesContext from "../context/notes/notes-context";
-import { useContext } from "react";
-
-function Header({ onSearch }) {
+function Header() {
   const { addNote, deleteNote, notes, startEdit, currentNote } =
     useContext(NotesContext);
-
+  console.log(currentNote);
   const onNoteAdd = () => {
     const newNote = {
       id: notes.length < 1 ? 0 : notes[notes.length - 1].id + 1,
@@ -36,8 +36,14 @@ function Header({ onSearch }) {
 
   return (
     <AppBar position='fixed'>
-      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-        <SearchBar onSearch={onSearch} />
+      <Toolbar
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          color: "inherit",
+        }}
+      >
+        <SearchBar />
         <ButtonGroup>
           <IconButton color='inherit' onClick={onNoteAdd}>
             <AddIcon />
@@ -46,7 +52,9 @@ function Header({ onSearch }) {
           <IconButton
             color='inherit'
             onClick={startEdit}
-            disabled={notes.length < 1 ? true : false}
+            disabled={
+              notes.length < 1 || Object.keys(currentNote) < 1 ? true : false
+            }
           >
             <EditIcon />
           </IconButton>
@@ -54,7 +62,9 @@ function Header({ onSearch }) {
           <IconButton
             color='inherit'
             onClick={onNoteDelete}
-            disabled={notes.length < 1 ? true : false}
+            disabled={
+              notes.length < 1 || Object.keys(currentNote) < 1 ? true : false
+            }
           >
             <DeleteOutlineIcon />
           </IconButton>

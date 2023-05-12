@@ -12,11 +12,13 @@ function NoteItem({ title, onChoice, id, content }) {
       divider={true}
       onClick={() => onChoice(id)}
     >
-      <Typography variant='h5' component='p'>
+      <Typography variant='h6' component='p'>
         {title}
       </Typography>
       <Typography variant='body1'>
-        {content.length > 100 ? `${content.slice(0, 100)}...` : content}
+        {content.length > 100
+          ? `${content.replace(title, "").slice(0, 100)}...`
+          : content.replace(title, "")}
       </Typography>
     </ListItem>
   );
